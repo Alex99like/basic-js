@@ -16,44 +16,22 @@ const { NotImplementedError } = require('../extensions/index.js');
  *
  */
  function repeater(str, options) {
-    if (!options.additionSeparator) {
-        options.additionSeparator = '|'
+    let res = [];
+    let add = [];
+    let times = options.hasOwnProperty("repeatTimes") ? options.repeatTimes : 1;
+    let addTimes = options.hasOwnProperty("additionRepeatTimes") ? options.additionRepeatTimes : 1;
+    let sep = options.hasOwnProperty("separator") ? options.separator + "" : "+";
+    let set = options.hasOwnProperty("addition") ? options.addition + "" : "";
+    let addSep = options.hasOwnProperty("additionSeparator") ? options.additionSeparator : "|";
+    for (let i = 0; i < addTimes; i++) {
+        add.push(set);
     }
-
-    if (!options.separator) {
-        options.separator = '+'
+    add = add.join(addSep);
+    for (let i = 0; i < times; i++) {
+      res.push(str+add);
     }
-
-    
-
-    let addition = ''
-    let value = str
-    let result = ''
-
-    if (String(options.addition)) {
-        addition += options.addition
-    }
-
-    if (options.additionRepeatTimes > 1) {
-        addition += options.additionSeparator
-        if (options.additionRepeatTimes) {
-            addition = addition.repeat(options.additionRepeatTimes)
-            addition = addition.slice(0, addition.length - options.additionSeparator.length)
-        }
-    }
-
-    value += addition
-
-    if (options.repeatTimes > 1) {
-        value += options.separator
-        value = value.repeat(options.repeatTimes)
-        value = value.slice(0, value.length - options.separator.length)
-    }
-    
-
-
-    return value
-}
+    return res.join(sep);
+  }
 
 
 module.exports = {
